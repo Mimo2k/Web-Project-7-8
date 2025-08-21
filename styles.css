@@ -1,0 +1,585 @@
+/* Lesson 13: Start - Main Activity: CSS variables and global styles */
+:root {
+    --primary-blue: #007bff;
+    --secondary-green: #28a745;
+    --accent-yellow: #ffc107;
+    --neutral-gray: #f8f9fa;
+    --text-dark: #212529;
+    --text-light: #fff;
+    --shadow-soft: 0 8px 16px rgba(0, 0, 0, 0.1);
+    --transition: all 0.4s ease-in-out;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+/* Lesson 13: Additional Activity: Body styling */
+body {
+    background: linear-gradient(135deg, #fff, #e6f0fa);
+    color: var(--text-dark);
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+/* Lesson 13: End */
+
+/* Lesson 14: Start - Main Activity: Header styling */
+header {
+    background: linear-gradient(to right, var(--primary-blue), #00c6ff);
+    color: var(--text-light);
+    padding: 2vw 5%;
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+/* Lesson 14: Additional Activity: Header animation and text styling */
+header h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    letter-spacing: 0.15rem;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+    animation: fadeInHeader 1.2s ease-out;
+}
+/* Lesson 14: End */
+
+/* Lesson 15: Start - Main Activity: Navigation base styles */
+nav {
+    background: rgba(33, 37, 41, 0.95);
+    padding: 1.5vw 5%;
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+}
+
+nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    margin: 0 1.8vw;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-weight: 500;
+}
+/* Lesson 15: Additional Activity: Navigation hover effects */
+nav a:hover, nav a.active {
+    color: var(--accent-yellow);
+}
+
+nav a::before {
+    content: '';
+    position: absolute;
+    bottom: -0.3rem;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--accent-yellow);
+    transition: var(--transition);
+    transform: translateX(-50%);
+}
+
+nav a:hover::before {
+    width: 100%;
+}
+/* Lesson 15: End */
+
+/* Lesson 16: Start - Main Activity: Carousel base styles */
+.hero-carousel {
+    max-width: 90%;
+    margin: 3vw auto;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    height: clamp(25rem, 60vh, 40rem);
+    background: var(--neutral-gray);
+}
+
+.carousel-slides {
+    display: flex;
+    width: 400%;
+    height: 100%;
+}
+
+.carousel-slide {
+    flex: 0 0 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.event-card {
+    position: relative;
+    width: 90%;
+    height: 90%;
+    border-radius: 1.2rem;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.event-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    filter: brightness(0.8);
+}
+
+.event-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.content-wrapper {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1.5vw 2.5vw;
+    border-radius: 1rem;
+    max-width: 70%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(5px);
+}
+/* Lesson 16: Additional Activity: Carousel content styling */
+.content-wrapper h2 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    margin-bottom: 1.2vw;
+    color: var(--primary-blue);
+}
+
+.content-wrapper p {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    margin-bottom: 1.2vw;
+}
+
+.content-wrapper .details {
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+    color: var(--secondary-green);
+    font-weight: 500;
+}
+/* Lesson 16: End */
+
+/* Lesson 17: Start - Main Activity: Container and news grid base styles */
+.container {
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 3vw 5%;
+}
+
+section {
+    margin-bottom: 4vw;
+    background: var(--text-light);
+    border-radius: 1.5rem;
+    padding: 3vw;
+    box-shadow: var(--shadow-soft);
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+    gap: 2.5vw;
+}
+
+.news-card {
+    background: linear-gradient(to bottom, #fff, #f8f9fa);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+}
+/* Lesson 17: Additional Activity: News card content styling */
+.news-card img {
+    width: 100%;
+    height: 16rem;
+    object-fit: cover;
+}
+
+.news-card-content {
+    padding: 1.8vw;
+}
+
+.news-card-content h4 {
+    color: var(--secondary-green);
+    font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+    margin-bottom: 1vw;
+}
+
+.news-card-content p {
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+}
+/* Lesson 17: End */
+
+/* Lesson 18: Start - Main Activity: Section heading styles */
+section h3 {
+    color: var(--primary-blue);
+    font-size: clamp(1.6rem, 3.5vw, 2rem);
+    margin-bottom: 2vw;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+section h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 4rem;
+    height: 0.25rem;
+    background: linear-gradient(to right, var(--secondary-green), var(--accent-yellow));
+}
+/* Lesson 18: Additional Activity: News card hover effects */
+.news-card:hover {
+    transform: translateY(-0.8rem);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.news-card img {
+    transition: var(--transition);
+}
+
+.news-card:hover img {
+    transform: scale(1.08);
+}
+/* Lesson 18: End */
+
+/* Lesson 19: Start - Main Activity: Interactive section base styles */
+.interactive-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3vw;
+    margin-top: 4vw;
+}
+
+.poll, .comments {
+    background: linear-gradient(to bottom, #fff, #f0f4f8);
+    padding: 2.5vw;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.poll-option {
+    margin: 1vw 0;
+    font-size: clamp(0.95rem, 1.9vw, 1.05rem);
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+}
+/* Lesson 19: Additional Activity: Poll and comment button styling */
+.poll button, .comments button {
+    background: linear-gradient(to right, var(--primary-blue), #00c6ff);
+    color: var(--text-light);
+    border: none;
+    padding: 1vw 2vw;
+    border-radius: 0.6rem;
+    cursor: not-allowed;
+    transition: var(--transition);
+    font-size: clamp(0.95rem, 1.9vw, 1.05rem);
+    margin-top: 1vw;
+}
+
+.poll button:hover, .comments button:hover {
+    opacity: 0.9;
+}
+
+.comment {
+    border-bottom: 1px solid #dee2e6;
+    padding: 1vw 0;
+}
+
+.comments textarea {
+    width: 100%;
+    padding: 1vw;
+    border-radius: 0.6rem;
+    border: 1px solid #ced4da;
+    resize: vertical;
+    pointer-events: none;
+    margin-top: 1vw;
+}
+/* Lesson 19: End */
+
+/* Lesson 20: Start - Main Activity: Spotlight and gallery base styles */
+.spotlight-gallery {
+    margin-top: 5vw;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3vw;
+}
+
+.student-spotlight {
+    background: linear-gradient(135deg, var(--accent-yellow), #ffd75e);
+    color: var(--text-dark);
+    padding: 3vw;
+    border-radius: 1.5rem;
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+}
+
+.creative-corner {
+    background: var(--text-light);
+    padding: 2vw;
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 1.5vw;
+}
+/* Lesson 20: Additional Activity: Spotlight and gallery image styling */
+.student-spotlight img {
+    border-radius: 50%;
+    margin-bottom: 1.5vw;
+    width: clamp(10rem, 20vw, 14rem);
+    height: clamp(10rem, 20vw, 14rem);
+    object-fit: cover;
+    border: 4px solid var(--text-light);
+    box-shadow: var(--shadow-soft);
+    display: block;
+    margin: 0 auto;
+}
+
+.student-spotlight h3 {
+    font-size: clamp(1.6rem, 3vw, 1.8rem);
+    margin-bottom: 1vw;
+    color: var(--primary-blue);
+}
+
+.student-spotlight h4 {
+    font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+    margin-bottom: 1vw;
+}
+
+.student-spotlight p {
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+}
+
+.gallery img {
+    width: 100%;
+    height: 14rem;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+/* Lesson 20: End */
+
+/* Lesson 21: Start - Main Activity: Events and fun facts base styles */
+.events-fun {
+    margin-top: 5vw;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3vw;
+}
+
+.events {
+    background: var(--text-light);
+    padding: 2.5vw;
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.events ul {
+    list-style: none;
+}
+
+.events li {
+    margin-bottom: 1.5vw;
+    padding: 1vw;
+    background: linear-gradient(to right, #e9ecef, #f8f9fa);
+    border-radius: 0.8rem;
+}
+
+.fun-facts {
+    background: linear-gradient(to bottom, var(--secondary-green), #218838);
+    color: var(--text-light);
+    padding: 2.5vw;
+    border-radius: 1.5rem;
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+}
+/* Lesson 21: Additional Activity: Events and fun facts content styling */
+.fun-facts p {
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.1rem);
+}
+/* Lesson 21: End */
+
+/* Lesson 22: Start - Main Activity: Carousel animation */
+@keyframes slide {
+    0%, 25% { transform: translateX(0); }
+    30%, 55% { transform: translateX(-25%); }
+    60%, 85% { transform: translateX(-50%); }
+    90%, 100% { transform: translateX(-75%); }
+}
+
+.carousel-slides {
+    animation: slide 20s infinite ease-in-out;
+}
+/* Lesson 22: Additional Activity: Other animations and transitions */
+.event-card {
+    transition: var(--transition);
+}
+
+.event-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.event-card img {
+    transition: var(--transition);
+}
+
+.event-card:hover img {
+    filter: brightness(0.9);
+}
+
+.student-spotlight img {
+    transition: var(--transition);
+}
+
+.student-spotlight img:hover {
+    transform: scale(1.05);
+}
+
+.gallery img {
+    transition: var(--transition);
+}
+
+.gallery img:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-soft);
+}
+
+.events li {
+    transition: var(--transition);
+}
+
+.events li:hover {
+    background: linear-gradient(to right, #dee2e6, #e9ecef);
+}
+
+@keyframes fadeInHeader {
+    from { opacity: 0; transform: translateY(-3vw); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInSection {
+    from { opacity: 0; transform: translateY(2vw); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+section {
+    animation: fadeInSection 1s ease-out forwards;
+    opacity: 0;
+}
+
+section:nth-child(odd) { animation-delay: 0.2s; }
+section:nth-child(even) { animation-delay: 0.4s; }
+/* Lesson 22: End */
+
+/* Lesson 23: Start - Main Activity: Footer styling */
+footer {
+    background: linear-gradient(to right, var(--primary-blue), #00c6ff);
+    color: var(--text-light);
+    text-align: center;
+    padding: 2vw 5%;
+    margin-top: 6vw;
+    box-shadow: 0 -8px 16px rgba(0, 0, 0, 0.1);
+}
+/* Lesson 23: Additional Activity: Responsive design */
+@media (max-width: 1024px) {
+    .interactive-section, .spotlight-gallery, .events-fun {
+        grid-template-columns: 1fr;
+    }
+
+    .news-grid {
+        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 4vw 5%;
+    }
+
+    nav a {
+        margin: 0 1.2vw;
+        font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+
+    .hero-carousel {
+        height: 50vh;
+    }
+
+    .content-wrapper {
+        max-width: 85%;
+        padding: 2vw 3vw;
+    }
+
+    .content-wrapper h2 {
+        font-size: 1.8rem;
+    }
+
+    .content-wrapper p {
+        font-size: 1rem;
+    }
+
+    .content-wrapper .details {
+        font-size: 0.9rem;
+    }
+
+    section {
+        padding: 4vw;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    }
+
+    .student-spotlight img {
+        width: clamp(8rem, 18vw, 12rem);
+        height: clamp(8rem, 18vw, 12rem);
+    }
+}
+
+@media (max-width: 480px) {
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    nav a {
+        margin: 1vw 0.5vw;
+        font-size: 0.85rem;
+    }
+
+    .news-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .content-wrapper {
+        max-width: 90%;
+        padding: 3vw;
+    }
+
+    .content-wrapper h2 {
+        font-size: 1.4rem;
+    }
+
+    .content-wrapper p {
+        font-size: 0.95rem;
+    }
+
+    .content-wrapper .details {
+        font-size: 0.85rem;
+    }
+
+    .student-spotlight img {
+        width: clamp(6rem, 16vw, 10rem);
+        height: clamp(6rem, 16vw, 10rem);
+    }
+}
+/* Lesson 23: End */
