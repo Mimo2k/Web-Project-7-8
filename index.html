@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School News Portal</title>
+    <style>
+        :root {
+            --primary-blue: #007bff;
+            --secondary-green: #28a745;
+            --accent-yellow: #ffc107;
+            --neutral-gray: #f8f9fa;
+            --text-dark: #212529;
+            --text-light: #ffffff;
+            --shadow-soft: 0 8px 16px rgba(0, 0, 0, 0.1);
+            --transition-smooth: all 0.4s ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffffff, #e6f0fa);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--primary-blue), #00c6ff);
+            color: var(--text-light);
+            padding: 2vw 5%;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: fadeInHeader 1.2s ease-out;
+        }
+
+        header h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            letter-spacing: 0.15rem;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+        }
+
+        nav {
+            background: rgba(33, 37, 41, 0.95);
+            padding: 1.5vw 5%;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin: 0 1.8vw;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            transition: var(--transition-smooth);
+            position: relative;
+            font-weight: 500;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-yellow);
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            bottom: -0.3rem;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-yellow);
+            transition: var(--transition-smooth);
+            transform: translateX(-50%);
+        }
+
+        nav a:hover::before {
+            width: 100%;
+        }
+
+        .hero-carousel {
+            max-width: 90%;
+            margin: 3vw auto;
+            position: relative;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            height: clamp(25rem, 60vh, 40rem);
+            background: var(--neutral-gray);
+        }
+
+        .carousel-slides {
+            display: flex;
+            width: 400%;
+            height: 100%;
+            animation: slide 20s infinite ease-in-out;
+        }
+
+        .carousel-slide {
+            flex: 0 0 25%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .event-card {
+            position: relative;
+            width: 90%;
+            height: 90%;
+            border-radius: 1.2rem;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+            transition: var(--transition-smooth);
+            background: transparent;
+        }
+
+        .event-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        }
+
+        .event-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            filter: brightness(0.8);
+            transition: var(--transition-smooth);
+        }
+
+        .event-card:hover img {
+            filter: brightness(0.9);
+        }
+
+        .event-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .content-wrapper {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5vw 2.5vw;
+            border-radius: 1rem;
+            max-width: 70%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(5px);
+        }
+
+        .content-wrapper h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 1.2vw;
+            color: var(--primary-blue);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-wrapper p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 1.2vw;
+            line-height: 1.5;
+            color: var(--text-dark);
+        }
+
+        .content-wrapper .details {
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+            color: var(--secondary-green);
+            font-weight: 500;
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(0); }
+            30% { transform: translateX(-25%); }
+            55% { transform: translateX(-25%); }
+            60% { transform: translateX(-50%); }
+            85% { transform: translateX(-50%); }
+            90% { transform: translateX(-75%); }
+            100% { transform: translateX(-75%); }
+        }
+
+        .container {
+            max-width: 90%;
+            margin: 0 auto;
+            padding: 3vw 5%;
+        }
+
+        .section {
+            margin-bottom: 4vw;
+            background: var(--text-light);
+            border-radius: 1.5rem;
+            padding: 3vw;
+            box-shadow: var(--shadow-soft);
+            animation: fadeInSection 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        .section:nth-child(odd) {
+            animation-delay: 0.2s;
+        }
+
+        .section:nth-child(even) {
+            animation-delay: 0.4s;
+        }
+
+        .section h3 {
+            color: var(--primary-blue);
+            font-size: clamp(1.6rem, 3.5vw, 2rem);
+            margin-bottom: 2vw;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 4rem;
+            height: 0.25rem;
+            background: linear-gradient(to right, var(--secondary-green), var(--accent-yellow));
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+            gap: 2.5vw;
+        }
+
+        .news-card {
+            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+        }
+
+        .news-card:hover {
+            transform: translateY(-0.8rem);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .news-card img {
+            width: 100%;
+            height: 16rem;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+
+        .news-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .news-card-content {
+            padding: 1.8vw;
+        }
+
+        .news-card-content h4 {
+            color: var(--secondary-green);
+            font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+            margin-bottom: 1vw;
+        }
+
+        .news-card-content p {
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+        }
+
+        .interactive-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3vw;
+            margin-top: 4vw;
+        }
+
+        .poll, .comments {
+            background: linear-gradient(to bottom, #ffffff, #f0f4f8);
+            padding: 2.5vw;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .poll-option {
+            margin: 1vw 0;
+            font-size: clamp(0.95rem, 1.9vw, 1.05rem);
+            display: flex;
+            align-items: center;
+            gap: 0.5vw;
+        }
+
+        .poll button, .comments button {
+            background: linear-gradient(to right, var(--primary-blue), #00c6ff);
+            color: var(--text-light);
+            border: none;
+            padding: 1vw 2vw;
+            border-radius: 0.6rem;
+            cursor: not-allowed;
+            transition: var(--transition-smooth);
+            font-size: clamp(0.95rem, 1.9vw, 1.05rem);
+            margin-top: 1vw;
+        }
+
+        .poll button:hover, .comments button:hover {
+            opacity: 0.9;
+        }
+
+        .comment {
+            border-bottom: 1px solid #dee2e6;
+            padding: 1vw 0;
+        }
+
+        .comments textarea {
+            width: 100%;
+            padding: 1vw;
+            border-radius: 0.6rem;
+            border: 1px solid #ced4da;
+            resize: vertical;
+            pointer-events: none;
+            margin-top: 1vw;
+        }
+
+        .spotlight-gallery {
+            margin-top: 5vw;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3vw;
+        }
+
+        .student-spotlight {
+            background: linear-gradient(135deg, var(--accent-yellow), #ffd75e);
+            color: var(--text-dark);
+            padding: 3vw;
+            border-radius: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .student-spotlight img {
+            border-radius: 50%;
+            margin-bottom: 1.5vw;
+            width: clamp(10rem, 20vw, 14rem); /* Increased size for better visibility */
+            height: clamp(10rem, 20vw, 14rem);
+            object-fit: cover; /* Ensures image fits without distortion */
+            border: 4px solid var(--text-light);
+            box-shadow: var(--shadow-soft);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            transition: var(--transition-smooth);
+        }
+
+        .student-spotlight img:hover {
+            transform: scale(1.05);
+        }
+
+        .student-spotlight h3 {
+            font-size: clamp(1.6rem, 3vw, 1.8rem);
+            margin-bottom: 1vw;
+            color: var(--primary-blue);
+        }
+
+        .student-spotlight h4 {
+            font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+            margin-bottom: 1vw;
+            color: var(--text-dark);
+        }
+
+        .student-spotlight p {
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+        }
+
+        .creative-corner {
+            background: var(--text-light);
+            padding: 2vw;
+            border-radius: 1.5rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+            gap: 1.5vw;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 14rem;
+            object-fit: cover;
+            border-radius: 1rem;
+            transition: var(--transition-smooth);
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .events-fun {
+            margin-top: 5vw;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3vw;
+        }
+
+        .events {
+            background: var(--text-light);
+            padding: 2.5vw;
+            border-radius: 1.5rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .events ul {
+            list-style: none;
+        }
+
+        .events li {
+            margin-bottom: 1.5vw;
+            padding: 1vw;
+            background: linear-gradient(to right, #e9ecef, #f8f9fa);
+            border-radius: 0.8rem;
+            transition: var(--transition-smooth);
+        }
+
+        .events li:hover {
+            background: linear-gradient(to right, #dee2e6, #e9ecef);
+        }
+
+        .fun-facts {
+            background: linear-gradient(to bottom, var(--secondary-green), #218838);
+            color: var(--text-light);
+            padding: 2.5vw;
+            border-radius: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .fun-facts p {
+            font-style: italic;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+        }
+
+        footer {
+            background: linear-gradient(to right, var(--primary-blue), #00c6ff);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2vw 5%;
+            margin-top: 6vw;
+            box-shadow: 0 -8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes fadeInHeader {
+            from { opacity: 0; transform: translateY(-3vw); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInSection {
+            from { opacity: 0; transform: translateY(2vw); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 1024px) {
+            .interactive-section, .spotlight-gallery, .events-fun {
+                grid-template-columns: 1fr;
+            }
+
+            .news-grid {
+                grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 4vw 5%;
+            }
+
+            nav a {
+                margin: 0 1.2vw;
+                font-size: clamp(0.9rem, 2vw, 1rem);
+            }
+
+            .hero-carousel {
+                height: 50vh;
+            }
+
+            .content-wrapper {
+                max-width: 85%;
+                padding: 2vw 3vw;
+            }
+
+            .content-wrapper h2 {
+                font-size: 1.8rem;
+            }
+
+            .content-wrapper p {
+                font-size: 1rem;
+            }
+
+            .content-wrapper .details {
+                font-size: 0.9rem;
+            }
+
+            .section {
+                padding: 4vw;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+            }
+
+            .student-spotlight img {
+                width: clamp(8rem, 18vw, 12rem);
+                height: clamp(8rem, 18vw, 12rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav a {
+                margin: 1vw 0.5vw;
+                font-size: 0.85rem;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content-wrapper {
+                max-width: 90%;
+                padding: 3vw;
+            }
+
+            .content-wrapper h2 {
+                font-size: 1.4rem;
+            }
+
+            .content-wrapper p {
+                font-size: 0.95rem;
+            }
+
+            .content-wrapper .details {
+                font-size: 0.85rem;
+            }
+
+            .student-spotlight img {
+                width: clamp(6rem, 16vw, 10rem);
+                height: clamp(6rem, 16vw, 10rem);
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>School News Portal</h1>
+    </header>
+
+    <nav>
+        <a href="#home" class="active">Home</a>
+        <a href="#sports">Sports</a>
+        <a href="#arts">Arts & Culture</a>
+        <a href="#academics">Academics</a>
+        <a href="#student-life">Student Life</a>
+        <a href="#announcements">Announcements</a>
+        <a href="#interactive">Interactive</a>
+        <a href="#spotlight">Spotlight & Gallery</a>
+        <a href="#events">Events & Fun</a>
+    </nav>
+
+    <div class="hero-carousel" id="home">
+        <div class="carousel-slides">
+            <div class="carousel-slide">
+                <div class="event-card">
+                    <img src="https://classicalconversations.com/wp-content/uploads/2025/01/Jan2025_Blog_ScienceFair_1200x628px.jpg" alt="Science Fair Highlights">
+                    <div class="event-content">
+                        <div class="content-wrapper">
+                            <h2>Science Fair Triumphs</h2>
+                            <p>This year's Science Fair showcased groundbreaking projects from grades 7-8 students, focusing on sustainable energy and AI innovations. Over 50 participants demonstrated their experiments to judges and peers.</p>
+                            <div class="details">Date: August 15, 2025 | Location: School Auditorium | Highlights: Robot demos and eco-friendly inventions.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <div class="event-card">
+                    <img src="https://media.licdn.com/dms/image/v2/D5612AQHb4OXiTAUJrA/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1702179121573?e=2147483647&v=beta&t=TqcBE30s3tBrrn58u78iWRKhL9QuIW7FqTwmcwi5ga8" alt="Sports Day Excitement">
+                    <div class="event-content">
+                        <div class="content-wrapper">
+                            <h2>Sports Day Thrills</h2>
+                            <p>An action-packed day filled with races, team games, and athletic challenges. Students from all houses competed fiercely, promoting fitness and teamwork among peers.</p>
+                            <div class="details">Date: September 15, 2025 | Location: School Grounds | Highlights: Relay races, football matches, and award ceremonies.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <div class="event-card">
+                    <img src="https://static.toiimg.com/thumb/imgsize-23456,msid-63828530,width-600,resizemode-4/63828530.jpg" alt="Arts Festival">
+                    <div class="event-content">
+                        <div class="content-wrapper">
+                            <h2>Arts Festival Creativity</h2>
+                            <p>A celebration of artistic expression featuring paintings, sculptures, and performances. Students explored various mediums to convey emotions and stories through their work.</p>
+                            <div class="details">Date: October 5, 2025 | Location: Art Gallery Hall | Highlights: Live performances, art auctions, and workshops.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <div class="event-card">
+                    <img src="https://brookhillschool.files.wordpress.com/2014/05/academicawardsceremonyta-9.jpg" alt="Academic Excellence">
+                    <div class="event-content">
+                        <div class="content-wrapper">
+                            <h2>Academic Excellence Awards</h2>
+                            <p>Recognizing top performers in academics, with presentations on study techniques and future career paths. Inspiring speeches from alumni and teachers.</p>
+                            <div class="details">Date: November 10, 2025 | Location: Main Hall | Highlights: Scholarship announcements and motivational talks.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section" id="sports">
+            <h3>Sports Updates</h3>
+            <div class="news-grid">
+                <div class="news-card">
+                    <img src="https://looking-for-soccer.com/wp-content/uploads/2021/03/Philadelphie-Union-Academy-USA-1024x683.jpg" alt="Soccer Victory">
+                    <div class="news-card-content">
+                        <h4>Soccer Team Triumphs 3-1</h4>
+                        <p>Our school's soccer team delivered an outstanding performance in the regional match.</p>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <img src="https://i.ytimg.com/vi/MO0GL8z6JbI/maxresdefault.jpg" alt="Basketball Tryouts">
+                    <div class="news-card-content">
+                        <h4>Upcoming Basketball Tryouts</h4>
+                        <p>Get ready to showcase your skills – sign up today!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="arts">
+            <h3>Arts & Culture Spotlight</h3>
+            <div class="news-grid">
+                <div class="news-card">
+                    <img src="https://images.pexels.com/photos/8466019/pexels-photo-8466019.jpeg" alt="School Play">
+                    <div class="news-card-content">
+                        <h4>School Play Receives Rave Reviews</h4>
+                        <p>The drama club's latest production captivated audiences.</p>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <img src="https://images.pexels.com/photos/8467274/pexels-photo-8467274.jpeg" alt="Art Exhibition">
+                    <div class="news-card-content">
+                        <h4>Student Art Exhibition Showcases Talent</h4>
+                        <p>Grade 7 artists impress with creative works.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="academics">
+            <h3>Academic Achievements</h3>
+            <div class="news-grid">
+                <div class="news-card">
+                    <img src="https://images.pexels.com/photos/256417/pexels-photo-256417.jpeg" alt="Math Competition">
+                    <div class="news-card-content">
+                        <h4>Math Competition Success</h4>
+                        <p>Our team clinches second place in regionals!</p>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <img src="https://images.pexels.com/photos/5212327/pexels-photo-5212327.jpeg" alt="Study Tips">
+                    <div class="news-card-content">
+                        <h4>Effective Study Strategies</h4>
+                        <p>Top tips to enhance your learning experience.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="student-life">
+            <h3>Student Life Highlights</h3>
+            <div class="news-grid">
+                <div class="news-card">
+                    <img src="https://images.pexels.com/photos/28397727/pexels-photo-28397727.jpeg" alt="Chess Club">
+                    <div class="news-card-content">
+                        <h4>Chess Club Expansion</h4>
+                        <p>New members bring fresh energy to the club.</p>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <img src="https://mom.com/wp-content/uploads/2024/09/birthday_party_rules_featured.jpg" alt="Birthdays">
+                    <div class="news-card-content">
+                        <h4>October Birthday Celebrations</h4>
+                        <p>Warm wishes to all our October celebrants!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="announcements">
+            <h3>Weekly Announcements</h3>
+            <div class="news-grid">
+                <div class="news-card">
+                    <img src="https://cdn.pixabay.com/photo/2019/07/03/09/41/national-history-museum-4314035_1280.jpg" alt="Museum Trip">
+                    <div class="news-card-content">
+                        <h4>Museum Field Trip</h4>
+                        <p>An exciting educational outing scheduled for next week.</p>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <img src="https://static.vecteezy.com/system/resources/previews/003/079/915/non_2x/school-timetable-rainbow-kid-design-of-planner-vector.jpg" alt="Exam Schedule">
+                    <div class="news-card-content">
+                        <h4>Exam Timetable Now Available</h4>
+                        <p>Prepare accordingly for upcoming assessments.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="interactive-section" id="interactive">
+            <div class="poll">
+                <h3>Student Poll</h3>
+                <p>Which event are you most excited for?</p>
+                <div class="poll-option">
+                    <input type="radio" name="poll" id="sports-day" disabled> <label for="sports-day">Sports Day</label>
+                </div>
+                <div class="poll-option">
+                    <input type="radio" name="poll" id="art-fest" disabled> <label for="art-fest">Art Festival</label>
+                </div>
+                <div class="poll-option">
+                    <input type="radio" name="poll" id="science-fair" disabled> <label for="science-fair">Science Fair</label>
+                </div>
+                <button>Cast Your Vote (Demo)</button>
+                <p><em>Current Results: Sports Day 42%, Art Festival 35%, Science Fair 23%</em></p>
+            </div>
+
+            <div class="comments">
+                <h3>Community Comments</h3>
+                <div class="comment">
+                    <p><strong>Alex K.</strong>: The art exhibition was inspiring!</p>
+                </div>
+                <div class="comment">
+                    <p><strong>Mia S.</strong>: Looking forward to the next sports event!</p>
+                </div>
+                <textarea placeholder="Share your thoughts (moderated)" rows="4"></textarea>
+                <button>Post Comment (Demo)</button>
+            </div>
+        </div>
+
+        <div class="spotlight-gallery" id="spotlight">
+            <div class="student-spotlight">
+                <img src="https://images.unsplash.com/photo-1729821728830-068bbff90645?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Featured Student">
+                <h3>Student Spotlight</h3>
+                <h4>Alex Rivera</h4>
+                <p>Alex's innovative project won first place in the regional science competition.</p>
+            </div>
+
+            <div class="creative-corner">
+                <h3>Art Gallery</h3>
+                <div class="gallery">
+                    <img src="https://cdn.pixabay.com/photo/2022/01/26/11/20/house-6968620_1280.png" alt="Student Artwork 1">
+                    <img src="https://images.unsplash.com/photo-1720323808735-dcb892d0325e?q=80&w=1147&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Student Artwork 2">
+                    <img src="https://images.unsplash.com/photo-1720323808592-71be40bf3070?q=80&w=990&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Student Artwork 3">
+                    <img src="https://images.unsplash.com/photo-1694370806118-c34c72badd81?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Student Artwork 4">
+                    <img src="https://images.unsplash.com/photo-1614278329841-a1869af18b4a?q=80&w=1129&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Student Artwork 5">
+                    <img src="https://images.unsplash.com/photo-1748188574040-7cbf1b06bba3?q=80&w=1028&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Student Artwork 6">
+                    <img src="https://images.unsplash.com/photo-1745761500085-e5e34684034f?q=80&w=1116&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Student Artwork 7">
+                    <img src="https://images.unsplash.com/photo-1748201135857-0e0879ea402f?q=80&w=731&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Student Artwork 8">
+                </div>
+            </div>
+        </div>
+
+        <div class="events-fun" id="events">
+            <div class="events">
+                <h3>Upcoming Events</h3>
+                <ul>
+                    <li>
+                        <strong>Sports Day:</strong> September 15 - Join the excitement on the field!
+                    </li>
+                    <li>
+                        <strong>Art Festival:</strong> October 5 - Showcase of student creativity.
+                    </li>
+                    <li>
+                        <strong>Parent-Teacher Meeting:</strong> November 10 - Discuss student progress.
+                    </li>
+                    <li>
+                        <strong>Holiday Break:</strong> December 20 - January 5 - Enjoy the festivities!
+                    </li>
+                </ul>
+            </div>
+
+            <div class="fun-facts">
+                <h3>Fun Fact of the Week</h3>
+                <p>Did you know? Honey never spoils – archaeologists have discovered pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible!</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 School News Portal. Connecting our community through knowledge and creativity.</p>
+    </footer>
+</body>
+</html>
